@@ -48,4 +48,6 @@ public class Basket {
         }
         return b1;
     }
+    public void saveBin(File file){}
+    public static Basket loadFromBinFile(File file){}
 }
