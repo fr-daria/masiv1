@@ -1,10 +1,9 @@
 import java.io.*;
-import java.util.Scanner;
 
 public class Basket {
 
     private String[] productsInBasket; //продукты
-    private int[] sumProduct; //количество того или иного продукта
+    //    private int[] sumProduct; //количество того или иного продукта
     private int[] prices; //цены на товар
     private int check; //сумма чека
 
@@ -14,9 +13,15 @@ public class Basket {
         this.productsInBasket = productsInBasket;
     }
 
-    public void addToCart(int productNum, int amount) { // добавления amount штук продукта номер productNum в корзину
-        String s = productsInBasket[productNum - 1];
-        sumProduct[productNum - 1] = amount;
+    public String[] addToCart(int productNum, int amount) { // добавления amount штук продукта номер productNum в корзину
+        for (String c : productsInBasket) {
+            c = productsInBasket[productNum - 1];
+            //           sumProduct[productNum - 1] = amount;
+            for (int p : prices) {
+                prices[productNum - 1] = p * amount;
+            }
+        }
+        return productsInBasket;
     }
 
     public void printCart() { //вывода на экран покупательской корзины
@@ -37,11 +42,10 @@ public class Basket {
 
     public static Basket loadFromTxtFile(File textFile) throws IOException, ClassNotFoundException { // восстановления объекта корзины из текстового файла, в который ранее была она сохранена
         Basket b1;
-        try (ObjectInputStream ips = new ObjectInputStream(new FileInputStream(textFile)) {
-            b1 = ips.readObject();
+        try (ObjectInputStream ips = new ObjectInputStream(new FileInputStream(textFile);
+             FileInputStream fis = new FileInputStream(String.valueOf(ips))) {
+            b1 = (Basket) ips.readObject();
         }
         return b1;
     }
-    // геттеры по усмотрению
-
 }
