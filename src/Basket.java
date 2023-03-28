@@ -41,13 +41,27 @@ public class Basket {
     }
 
     public static Basket loadFromTxtFile(File textFile) throws IOException, ClassNotFoundException { // восстановления объекта корзины из текстового файла, в который ранее была она сохранена
-        Basket b1;
-        try (ObjectInputStream ips = new ObjectInputStream(new FileInputStream(textFile);
-             FileInputStream fis = new FileInputStream(String.valueOf(ips))) {
-            b1 = (Basket) ips.readObject();
+        //Basket b1;
+        // try (ObjectInputStream ips = new ObjectInputStream(new FileInputStream(textFile);
+        //     FileInputStream fis = new FileInputStream(String.valueOf(ips))) {
+        //    b1 = (Basket) ips.readObject();}
+        //return b1;
+        try (FileInputStream fis = new FileInputStream(textFile);
+             FileOutputStream fos = new FileOutputStream(fis)) {
+            int i;
+            int f;
+            while ((i = fis.read()) != -1) {
+                char f = (char) i;
+                Basket basket = new Basket(f);
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-        return b1;
     }
-    public void saveBin(File file){}
-    public static Basket loadFromBinFile(File file){}
+
+    public void saveBin(File file) {
+    }
+
+    public static Basket loadFromBinFile(File file) {
+    }
 }
