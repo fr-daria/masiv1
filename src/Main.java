@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
 //        Scanner scanner = new Scanner(System.in);
-        //       String[] product = {"1. Хлеб", "2. Соль", "3. Вода", "4. Вино"};
-        //       int[] price = {60, 45, 24, 340};
+        String[] product = {"1. Хлеб", "2. Соль", "3. Вода", "4. Вино"};
+        int[] price = {60, 45, 24, 340};
         //       for (int i = 0; i < 4; i++) {
         //          System.out.println(product[i] + " " + price[i] + " руб/шт");
 //        }
@@ -37,21 +37,23 @@ public class Main {
         //           } catch (NumberFormatException e) {
         //               System.out.println("Надо вводить числа, а не слова");
         //           }
-        Basket b = new Basket(new int[]{60, 45, 24, 340}, new String[]{"1. Хлеб", "2. Соль", "3. Вода", "4. Вино"});
+        File file = new File("backet.txt");
+        Basket b = new Basket(price, product);
         b.addToCart(3, 5);
         b.printCart();
-        b.saveTxt(new File("text.txt"));
+        b.saveTxt(new File(file.toURI()));
+        b.loadFromTxtFile(file);
 
     }
 
 
 //    int sum = 0;
 //        for(int i :lot){
-  //      sum += i;
- //   }
+    //      sum += i;
+    //   }
 
 //        for(int x = 0; x< 4;x++){
-  //      System.out.println("Ваша корзина: " + product[x] + " " + " " + price[x] + " руб/шт " + lot[x] + " руб в сумме");
-  //  }
-   //     System.out.println("Итого "+sum +" руб");}
+    //      System.out.println("Ваша корзина: " + product[x] + " " + " " + price[x] + " руб/шт " + lot[x] + " руб в сумме");
+    //  }
+    //     System.out.println("Итого "+sum +" руб");}
 }
