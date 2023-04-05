@@ -5,30 +5,32 @@ public class Basket {
     private String[] productsInBasket; //продукты
     //    private int[] sumProduct; //количество того или иного продукта
     private int[] prices; //цены на товар
-    private int check; //сумма чека
+    private int[] count; //оличество
 
 
     public Basket(int[] priсes, String[] productsInBasket) {
         this.prices = priсes;
         this.productsInBasket = productsInBasket;
+        this.count = new int[productsInBasket.length];
     }
 
-    public String[] addToCart(int productNum, int amount) { // добавления amount штук продукта номер productNum в корзину
-        for (String c : productsInBasket) {
-            c = productsInBasket[productNum - 1];
-            //           sumProduct[productNum - 1] = amount;
-            for (int p : prices) {
-                prices[productNum - 1] = p * amount;
-            }
-        }
-        return productsInBasket;
+    public void addToCart(int productNum, int amount) { // добавления amount штук продукта номер productNum в корзину
+        count[productNum - 1] += amount;
     }
 
     public void printCart() { //вывода на экран покупательской корзины
-        System.out.println(productsInBasket);
+        int allprise = 0;
+        for (int i = 0; i < productsInBasket.length; i++) {
+            if (count[i] > 0) {
+                int pprise = prices[i] * count[i];
+                allprise += pprise;
+                System.out.println("Корзина покупок " + productsInBasket[i] + prices[i] + count[i] + pprise);
+            }
+            System.out.println("Итого " + allprise);
+        }
     }
 
-    public void saveTxt(File textFile) { // сохранения корзины в текстовый файл; использовать встроенные сериализаторы нельзя
+    public void saveTxt(File textFile) { // сохранения корзины в текстовый файл;
         try (FileOutputStream fos = new FileOutputStream(textFile);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(this);
@@ -40,23 +42,14 @@ public class Basket {
         }
     }
 
-    public static Basket loadFromTxtFile(File textFile) throws IOException, ClassNotFoundException { // восстановления объекта корзины из текстового файла, в который ранее была она сохранена
-        //Basket b1;
-        // try (ObjectInputStream ips = new ObjectInputStream(new FileInputStream(textFile);
-        //     FileInputStream fis = new FileInputStream(String.valueOf(ips))) {
-        //    b1 = (Basket) ips.readObject();}
-        //return b1;
+    public static Basket loadFromTxtFile(File textFile) throws IOException, ClassNotFoundException {
+        Basket b1;
         try (FileInputStream fis = new FileInputStream(textFile);
-             FileOutputStream fos = new FileOutputStream(fis)) {
-            int i;
-            int f;
-            while ((i = fis.read()) != -1) {
-                char f = (char) i;
-                Basket basket = new Basket(f);
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            b1 = (Basket) ois.readObject();
         }
+        return b1;
     }
 
     public void saveBin(File file) {
@@ -65,3 +58,5 @@ public class Basket {
     public static Basket loadFromBinFile(File file) {
     }
 }
+
+
