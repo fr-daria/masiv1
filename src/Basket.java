@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Basket {
+public class Basket implements Serializable {
 
     private String[] productsInBasket; //продукты
     //    private int[] sumProduct; //количество того или иного продукта
@@ -52,10 +52,21 @@ public class Basket {
         return b1;
     }
 
-    public void saveBin(File file) {
+    public void saveBin(File file) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+            oos.writeObject(this);
+            oos.flush();
+        }
     }
 
-    public static Basket loadFromBinFile(File file) {
+    public static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+        Basket b1 = null;
+        try (FileInputStream fis = new FileInputStream(file);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            b1 = (Basket) ois.readObject();
+        }
+        return b1;
     }
 }
 
