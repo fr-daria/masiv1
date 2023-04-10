@@ -3,10 +3,9 @@ import java.util.Arrays;
 
 public class Basket implements Serializable {
 
-    private String[] productsInBasket; //продукты
-    //    private int[] sumProduct; //количество того или иного продукта
-    private int[] prices; //цены на товар
-    private int[] count; //оличество
+    private String[] productsInBasket;
+    private int[] prices;
+    private int[] count;
 
 
     public Basket(int[] priсes, String[] productsInBasket) {
@@ -15,11 +14,11 @@ public class Basket implements Serializable {
         this.count = new int[productsInBasket.length];
     }
 
-    public void addToCart(int productNum, int amount) { // добавления amount штук продукта номер productNum в корзину
+    public void addToCart(int productNum, int amount) {
         count[productNum - 1] += amount;
     }
 
-    public void printCart() { //вывода на экран покупательской корзины
+    public void printCart() {
         int allprise = 0;
         for (int i = 0; i < productsInBasket.length; i++) {
             if (count[i] > 0) {
@@ -31,7 +30,7 @@ public class Basket implements Serializable {
         }
     }
 
-    public void saveTxt(File textFile) { // сохранения корзины в текстовый файл;
+    public void saveTxt(File textFile) {
         try (FileOutputStream fos = new FileOutputStream(textFile)) {
             for (String product : productsInBasket) {
                 fos.write(product.getBytes());
@@ -54,9 +53,6 @@ public class Basket implements Serializable {
         Basket b  = null;
         int i;
         try (BufferedReader ips = new BufferedReader(new FileReader(textFile))) {
-            //int product = fis.read();
-            //b1 = Character.toChars(Integer.parseInt(product, '\n'));
-            //String b2 = String.copyValueOf(b1);
             String p = ips.readLine();
             String z = ips.readLine();
             String c = ips.readLine();
@@ -91,5 +87,3 @@ public class Basket implements Serializable {
         return b1;
     }
 }
-
-
